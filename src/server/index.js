@@ -11,7 +11,10 @@ const io = require('socket.io')(server, options);
 
 // APIs
 app.use(express.static('dist'));
-app.get('/api/getProjName', (req, res) => res.send({ name: os.userInfo().username }));
+app.get('/api/getProjName', (req, res) => {
+    console.log('api call')
+    res.send({ name: os.userInfo().username })
+});
 
 var globalRoom = 'laurence'
 
