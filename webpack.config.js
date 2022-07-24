@@ -40,7 +40,9 @@ module.exports = {
     open: true,
     historyApiFallback: true,
     proxy: {
-      '/api': 'http://localhost:8080'
+      // '/api': 'http://localhost:8080'
+      // '/api': 'http://121.37.234.166:9398'
+      '/api': 'http://121.37.234.166'
     }
   },
   plugins: [

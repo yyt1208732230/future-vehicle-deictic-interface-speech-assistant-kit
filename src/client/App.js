@@ -18,7 +18,8 @@ import sound_6_Saved from '../../public/speechAudios/6_Location_saved.mp3';
 import sound_7_Ok from '../../public/speechAudios/7_Alright.mp3';
 
 // Socket.io connection
-const socket = io.connect("http://localhost:8080");
+// const socket = io.connect("http://localhost:8080");
+const socket = io.connect("http://121.37.234.166");
 
 function App() {
   //Room State
