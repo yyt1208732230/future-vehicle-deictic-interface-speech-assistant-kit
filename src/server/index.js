@@ -5,7 +5,7 @@ const app = express();
 const server = http.createServer(app);
 const options = {
     cors: true,
-    origins: ['http://127.0.0.1:8080', 'http://127.0.0.1:3000'],
+    origins: ['http://127.0.0.1:8080', 'http://127.0.0.1:9398', 'http://127.0.0.1:3000','http://121.37.234.166:3000'],
 }
 const io = require('socket.io')(server, options);
 
