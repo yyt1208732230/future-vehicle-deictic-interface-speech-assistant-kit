@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import './app.css';
-import { Spin, Space, Modal, Button, Avatar, Image, Menu, Dropdown, notification } from "antd";
+import 'antd/dist/antd.css';
+import { Spin, Space, Modal, Button, Avatar, Image, Menu, Dropdown, notification, Divider } from "antd";
+import { SettingOutlined } from '@ant-design/icons';
+import { Cascader, Input, InputNumber, Select } from 'antd';
+import { Col, Row } from 'antd';
 import io from "socket.io-client";
 import { useEffect, useState } from "react";
 import useSound from 'use-sound';
@@ -8,14 +12,63 @@ import { uuid } from 'uuidv4';
 
 // Images
 import ReactImage from './tesla-model-3-screen-mockup-promo.jpg';
+import VoiceGIF from '../../public/speechAudios/voice.gif';
 // Prepared AI Response List
-import sound_1_Welcome from '../../public/speechAudios/1_Welcome_to_deictic_interface.mp3';
-import sound_2_Gesture from '../../public/speechAudios/2_Gesture_Recognizing.mp3';
-import sound_3_Edbcastle from '../../public/speechAudios/3_5_stars_Edinburgh_Castle.mp3';
-import sound_4_Save from '../../public/speechAudios/4_Save_locations.mp3';
-import sound_5_Rest1 from '../../public/speechAudios/5_4.6_stars_Petit_Paris.mp3';
-import sound_6_Saved from '../../public/speechAudios/6_Location_saved.mp3';
-import sound_7_Ok from '../../public/speechAudios/7_Alright.mp3';
+import wrongspeech_07 from '../../public/speechAudios/wrongspeech_07.mp3';
+import wrongspeech_06 from '../../public/speechAudios/wrongspeech_06.mp3';
+import wrongspeech_05 from '../../public/speechAudios/wrongspeech_05.mp3';
+import wrongspeech_04 from '../../public/speechAudios/wrongspeech_04.mp3';
+import wrongspeech_03 from '../../public/speechAudios/wrongspeech_03.mp3';
+import wrongspeech_02 from '../../public/speechAudios/wrongspeech_02.mp3';
+import wrongspeech_01 from '../../public/speechAudios/wrongspeech_01.mp3';
+import sorry_03 from '../../public/speechAudios/sorry_03.mp3';
+import sorry_02 from '../../public/speechAudios/sorry_02.mp3';
+import sorry_01 from '../../public/speechAudios/sorry_01.mp3';
+import shop_10_47 from '../../public/speechAudios/shop_10_4-7.mp3';
+import shop_09_50 from '../../public/speechAudios/shop_09_5-0.mp3';
+import shop_08_45 from '../../public/speechAudios/shop_08_4-5.mp3';
+import shop_07_40 from '../../public/speechAudios/shop_07_4-0.mp3';
+import shop_06_41 from '../../public/speechAudios/shop_06_4-1.mp3';
+import shop_05_44 from '../../public/speechAudios/shop_05_4-4.mp3';
+import shop_04_48 from '../../public/speechAudios/shop_04_4-8.mp3';
+import shop_03_40 from '../../public/speechAudios/shop_03_4-0.mp3';
+import shop_02_00 from '../../public/speechAudios/shop_02_0-0.mp3';
+import shop_01_43 from '../../public/speechAudios/shop_01_4-3.mp3';
+import service_02 from '../../public/speechAudios/service_02.mp3';
+import service_01 from '../../public/speechAudios/service_01.mp3';
+import save_01 from '../../public/speechAudios/save_01.mp3';
+import rest_10_46 from '../../public/speechAudios/rest_10_4-6.mp3';
+import rest_09_46 from '../../public/speechAudios/rest_09_4-6.mp3';
+import rest_08_46 from '../../public/speechAudios/rest_08_4-6.mp3';
+import rest_07_37 from '../../public/speechAudios/rest_07_3-7.mp3';
+import rest_06_41 from '../../public/speechAudios/rest_06_4-1.mp3';
+import rest_05_38 from '../../public/speechAudios/rest_05_3-8.mp3';
+import rest_04_43 from '../../public/speechAudios/rest_04_4-3.mp3';
+import rest_03_46 from '../../public/speechAudios/rest_03_4-6.mp3';
+import rest_02_43 from '../../public/speechAudios/rest_02_4-3.mp3';
+import rest_01_45 from '../../public/speechAudios/rest_01_4-5.mp3';
+import notsave_01 from '../../public/speechAudios/notsave_01.mp3';
+import church_03 from '../../public/speechAudios/church_03.mp3';
+import church_02 from '../../public/speechAudios/church_02.mp3';
+import church_01 from '../../public/speechAudios/church_01.mp3';
+import castle from '../../public/speechAudios/castle.mp3';
+import go from '../../public/speechAudios/0_3go.mp3';
+import tips from '../../public/speechAudios/0_2tips.mp3';
+import welcome from '../../public/speechAudios/0_1welcome.mp3';
+
+// Ant Layout
+const { Option, OptGroup } = Select;
+const selectBefore = (
+  <Select
+    defaultValue="add"
+    style={{
+      width: 60,
+    }}
+  >
+    <Option value="add">+</Option>
+    <Option value="minus">-</Option>
+  </Select>
+);
 
 // Socket.io connection
 // const socket = io.connect("http://localhost:8080");
@@ -33,53 +86,86 @@ function App() {
   const [messageReceived, setMessageReceived] = useState("");
   const [soundIdReceived, setSoundIdReceived] = useState("");
 
+  // Experiemntal States
+  const [trailType, setTrailType] = useState("");
+
   // Audio resource mapping
   const soundsMap = {
-    "1_Welcome": sound_1_Welcome,
-    "2_Gesture": sound_2_Gesture,
-    "3_Edbcastle": sound_3_Edbcastle,
-    "4_Save": sound_4_Save,
-    "5_Rest1": sound_5_Rest1,
-    "6_Saved": sound_6_Saved,
-    "7_Ok": sound_7_Ok,
+    // "1_Welcome": sound_1_Welcome,
+    // "2_Gesture": sound_2_Gesture,
+    // "3_Edbcastle": sound_3_Edbcastle,
+    // "4_Save": sound_4_Save,
+    // "5_Rest1": sound_5_Rest1,
+    // "6_Saved": sound_6_Saved,
+    // "7_Ok": sound_7_Ok,
+    'wrongspeech_07': wrongspeech_07,
+    'wrongspeech_06': wrongspeech_06,
+    'wrongspeech_05': wrongspeech_05,
+    'wrongspeech_04': wrongspeech_04,
+    'wrongspeech_03': wrongspeech_03,
+    'wrongspeech_02': wrongspeech_02,
+    'wrongspeech_01': wrongspeech_01,
+    'sorry_03': sorry_03,
+    'sorry_02': sorry_02,
+    'sorry_01': sorry_01,
+    'shop_10_4-7': shop_10_47,
+    'shop_09_5-0': shop_09_50,
+    'shop_08_4-5': shop_08_45,
+    'shop_07_4-0': shop_07_40,
+    'shop_06_4-1': shop_06_41,
+    'shop_05_4-4': shop_05_44,
+    'shop_04_4-8': shop_04_48,
+    'shop_03_4-0': shop_03_40,
+    'shop_02_0-0': shop_02_00,
+    'shop_01_4-3': shop_01_43,
+    'service_02': service_02,
+    'service_01': service_01,
+    'save_01': save_01,
+    'rest_10_4-6': rest_10_46,
+    'rest_09_4-6': rest_09_46,
+    'rest_08_4-6': rest_08_46,
+    'rest_07_3-7': rest_07_37,
+    'rest_06_4-1': rest_06_41,
+    'rest_05_3-8': rest_05_38,
+    'rest_04_4-3': rest_04_43,
+    'rest_03_4-6': rest_03_46,
+    'rest_02_4-3': rest_02_43,
+    'rest_01_4-5': rest_01_45,
+    'notsave_01': notsave_01,
+    'church_03': church_03,
+    'church_02': church_02,
+    'church_01': church_01,
+    'castle': castle,
+    'go': go,
+    'tips': tips,
+    'welcome': welcome,
   }
 
-  // Use audio by url
-  // const useAudio = (soundId) => {
-  //   console.log(soundIdReceived)
-  //   // check current received soundID
-  //   if (soundId == null || soundId == "") {
-  //     console.log('received error')
-  //     return [() => { }, () => { }];
-  //   }
-  //   let _url = soundsMap[soundId];
-  //   const [playing, setPlaying] = useState(false);
-  //   const [audio, SetAudio] = useState(new Audio(_url));
+  // Audio categories
+  const audioTypeMap = {
+    "common": ['welcome', 'tips', 'go'],
+    "shop": ['shop_01_4-3', 'shop_02_0-0', 'shop_03_4-0', 'shop_04_4-8', 'shop_05_4-4', 'shop_06_4-1', 'shop_07_4-0', 'shop_08_4-5', 'shop_09_5-0', 'shop_10_4-7'], //67 - 10
+    "restaurant": ['rest_01_4-5', 'rest_02_4-3', 'rest_03_4-6', 'rest_04_4-3', 'rest_05_3-8', 'rest_06_4-1', 'rest_07_3-7', 'rest_08_4-6', 'rest_09_4-6', 'rest_10_4-6'], //86 - 10
+    "service": ['service_01', 'service_02'], //34 -5
+    "church": ['church_01', 'church_02', 'church_03'], //4 - 4
+    "castle": ['castle'], //1 - 1
+    "private_house": ['sorry_01', 'sorry_02', 'sorry_03'], //9 - 3
+    "wrongspeech": ['wrongspeech_01', 'wrongspeech_02', 'wrongspeech_03', 'wrongspeech_04', 'wrongspeech_05', 'wrongspeech_06', 'wrongspeech_07'] //wrong objects, guidance
+  }
 
-  //   let toggle = () => {
-  //     setPlaying(!playing);
-  //     console.log(`remotive audio trigger - ${_url}`)
-  //   }
+  // Manipulate Faults
+  const faultType = {
+    "0_straightline_trail": {},
+    "1_normal_trail": {},
+    "2_no_cursor_trail": {}, // no cursor at all
+    "3_wrong_cursor_trail": {},// 50% each, correct speech, manally one right one wrong side
+    "4_wrong_speech_trail": {},// 50% each, 50% wrong objects
+    "5_wrong_detection_trail": {} // normal, wrong side objects
+  }
 
-  //   useEffect(() => {
-  //     playing ? audio.play() : audio.pause();
-  //   },
-  //     [playing]
-  //   );
+  // if the driver point at something I can't see it, then
 
-  //   useEffect(() => {
-  //     audio.addEventListener('ended', () => setPlaying(false));
-  //     return () => {
-  //       audio.removeEventListener('ended', () => setPlaying(false));
-  //     };
-  //   }, []);
-
-  //   useEffect(() => {
-  //     SetAudio(new Audio(_url));
-  //   }, [soundIdReceived]);
-
-  //   return [playing, toggle];
-  // };
+  // if the driver point one thing then he change it immediately
 
   // Set join room 
   const joinRoom = () => {
@@ -106,11 +192,41 @@ function App() {
     }
   };
 
-  // test
+  // Trigger sounds based on button (landmark type)
+  const sendSoundandomBy = (audioType = null) => {
+    if(!audioType) return;
+    let audioArray = audioTypeMap[audioType]
+    if(!audioArray || audioArray.length == 0) {
+      console.log('no commands found');
+    }
+    let audioIdWillSent = audioArray[Math.floor(Math.random() * audioArray.length)];
+    sendSoundId(audioIdWillSent);
+  }
+
+  // Voice Image/gif
+  const [isVoicePlay, setIsVoicePlay] = useState(false);
+  const toggleVoiceImage = () => {
+    setIsVoicePlay(!isVoicePlay);
+  }
+
+  var audio = null;
+
+  useEffect(() => {
+    if (audio) {
+      isVoicePlay ? audio.play() : audio.pause();
+    }
+  },
+    [isVoicePlay]
+  );
+
+  // Play audio by trigger
   const Playit = (soundId) => {
     let _url = soundsMap[soundId]
-    let audio = new Audio(_url);
+    if (audio) audio.pause();
+    audio = new Audio(_url);
+    audio.addEventListener('ended', () => setIsVoicePlay(false));
     audio.play();
+    toggleVoiceImage();
     console.log(soundId);
   }
 
@@ -132,28 +248,56 @@ function App() {
     });
   }, [socket]);
 
+  // Modal of Buttons Triggers
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const buttonList = Object.keys(soundsMap)
-  // const audListItems = buttonList.map((name, index) => 
-  //   <Button onClick={sendSoundId(name)}>{name}</Button>
-  // );
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  // Fault Tyoe Control
+  const handleChange = (value) => {
+    setTrailType(value);
+    console.log(`selected ${value}`);
+  };
 
   return (
     <>
       <div>
         {/* {projName ? <h1>{`Hello ${projName}`}</h1> : <h1>Loading.. please wait!</h1>} */}
-        <img
-          width={330}
+        {!isVoicePlay ? <Image
+          style={{
+            maxWidth: "100vw",
+            top: 0,
+            paddingBottom: 0
+          }}
+          width="100vw"
           // style={{display: 'block'}}
           src={ReactImage}
-        />
+        /> : null}
+        {isVoicePlay ? <Image
+          style={{
+            maxWidth: "100vw",
+            top: 0,
+            paddingBottom: 0
+          }}
+          width="100vw"
+          // style={{display: 'block'}}
+          src={VoiceGIF}
+        /> : null}
       </div>
-      <div>
-        {buttonList.map((name, index) =>
-          <button key={index} onClick={() => sendSoundId(name)}>{name}</button>
-        )}
-      </div>
-      <div className="App">
+      <div className="App" id="container">
         <div>
+          {/* <br/><br/> */}
           <input
             placeholder="Room Number..."
             onChange={(event) => {
@@ -162,16 +306,17 @@ function App() {
           />
           <button onClick={joinRoom}> Join Room</button>
         </div>
+        {/* -------------------- HIDDEN ------------------------------------ */}
         <div>
-          <input
+          <input hidden
             placeholder="Message..."
             onChange={(event) => {
               setMessage(event.target.value);
             }}
           />
-          <button onClick={sendMessage}> Send Message</button>
+          <button hidden onClick={sendMessage}> Send Message</button>
         </div>
-        <div>
+        <div hidden>
           <input
             placeholder="Sound ID..."
             onChange={(event) => {
@@ -180,10 +325,134 @@ function App() {
           />
           <button onClick={sendSoundId}> Trigger Sound</button>
         </div>
+        {/* --------------------------- HIDDEN -------------------------*/}
         <h1> Message:</h1>
         {messageReceived}
         {soundIdReceived}
       </div>
+      <Button type="primary" onClick={showModal}>
+        Speech Control
+      </Button>
+      <Modal
+        title="Speech Control"
+        visible={isModalVisible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        style={{
+          maxWidth: "100vw",
+          top: 0,
+          paddingBottom: 0
+        }}
+        bodyStyle={{
+          height: "calc(100vh - 55px - 53px)",
+          overflowY: "auto"
+        }}
+        width="100vw">
+        <div>
+          <Divider>Basic Info</Divider>
+          <Row>
+            <Col span={12}>
+              <Input addonBefore="Participant ID" defaultValue="XXX" />
+            </Col>
+            <Col span={12}>
+              <InputNumber addonBefore="Trail" defaultValue={1} />
+            </Col>
+          </Row>
+          <Row>
+            <Col span={24}>
+              Fault Type: <Select
+                defaultValue="0_straightline_trail"
+                // style={{
+                //   width: 200,
+                // }}
+                onChange={handleChange}
+              >
+                <OptGroup label="Normal">
+                  <Option value="0_straightline_trail">0_straightline_trail</Option>
+                  <Option value="1_normal_trail">1_normal_trail</Option>
+                </OptGroup>
+                <OptGroup label="Faults">
+                  <Option value="2_no_cursor_trail">2_no_cursor_trail</Option>
+                  <Option value="3_wrong_cursor_trail">3_wrong_cursor_trail</Option>
+                  <Option value="4_wrong_speech_trail">4_wrong_speech_trail</Option>
+                  <Option value="5_wrong_detection_trail">5_wrong_detection_trail</Option>
+                </OptGroup>
+              </Select>
+            </Col>
+          </Row>
+
+          <Divider>Welcome & Start</Divider>
+          <Row>
+            <Col span={7} offset={1}>
+              <Button type="primary" block onClick={() => sendSoundId('welcome')}>
+                1.Welcome
+              </Button>
+            </Col>
+            <Col span={7} offset={1}><Button type="primary" block onClick={() => sendSoundId('tips')}>
+              2. Tips
+            </Button></Col>
+            <Col span={7} offset={1}><Button type="primary" block onClick={() => sendSoundId('go')}>
+              3.GO
+            </Button></Col>
+          </Row>
+
+          <Divider>Normal Detection</Divider>
+          <Row>
+            <Col span={7} offset={1}>
+              <Button type="primary" color="#52c41a" block onClick={() => sendSoundandomBy('shop')}>
+                GROCERY
+              </Button>
+            </Col>
+            <Col span={7} offset={1}>
+              <Button type="primary" color="#52c41a" block onClick={() => sendSoundandomBy('restaurant')}>
+                RESTAUR
+              </Button></Col>
+            <Col span={7} offset={1}>
+              <Button type="primary" block onClick={() => sendSoundandomBy('service')}>
+                SERVICE
+              </Button>
+            </Col>
+          </Row>
+          <br/>
+          <Row>
+            <Col span={10} offset={2}>
+              <Button type="default" block onClick={() => sendSoundandomBy('church')}>
+                CHURCH
+              </Button>
+            </Col>
+            <Col span={10} offset={2}>
+              <Button type="default" block onClick={() => sendSoundandomBy('castle')}>
+                CASTLE
+              </Button></Col>
+          </Row>
+
+          <Divider>Location Saved/not</Divider>
+          <Row>
+            <Col span={10} offset={2}>
+              <Button type="primary" danger block onClick={() => sendSoundId('save_01')}>
+                -SAVE-
+              </Button>
+            </Col>
+            <Col span={10} offset={2}>
+              <Button type="primary" danger block onClick={() => sendSoundId('notsave_01')}>
+                NOT SAVE
+              </Button></Col>
+          </Row>
+
+          <Divider>Speech Faults</Divider>
+          <Row>
+            <Col span={24}>
+              <Button type="primary" color="#52c41a" block onClick={() => sendSoundandomBy('wrongspeech')}>
+                Irrelevant
+              </Button>
+            </Col>
+          </Row>
+
+          {/* {buttonList.map((name, index) =>
+            <button key={index} onClick={() => sendSoundId(name)}>{name}</button>
+          )} */}
+        </div>
+      </Modal>
     </>
 
   );
