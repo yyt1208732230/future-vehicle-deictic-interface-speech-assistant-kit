@@ -21,6 +21,8 @@ import wrongspeech_04 from '../../public/speechAudios/wrongspeech_04.mp3';
 import wrongspeech_03 from '../../public/speechAudios/wrongspeech_03.mp3';
 import wrongspeech_02 from '../../public/speechAudios/wrongspeech_02.mp3';
 import wrongspeech_01 from '../../public/speechAudios/wrongspeech_01.mp3';
+
+// normal long speech
 import sorry_03 from '../../public/speechAudios/sorry_03.mp3';
 import sorry_02 from '../../public/speechAudios/sorry_02.mp3';
 import sorry_01 from '../../public/speechAudios/sorry_01.mp3';
@@ -52,6 +54,39 @@ import church_03 from '../../public/speechAudios/church_03.mp3';
 import church_02 from '../../public/speechAudios/church_02.mp3';
 import church_01 from '../../public/speechAudios/church_01.mp3';
 import castle from '../../public/speechAudios/castle.mp3';
+
+// normal short speech
+import sorry_03_s from '../../public/speechAudios/sorry_03_s.mp3';
+import sorry_02_s from '../../public/speechAudios/sorry_02_s.mp3';
+import sorry_01_s from '../../public/speechAudios/sorry_01_s.mp3';
+import shop_10_47_s from '../../public/speechAudios/shop_10_s.mp3';
+import shop_09_50_s from '../../public/speechAudios/shop_09_s.mp3';
+import shop_08_45_s from '../../public/speechAudios/shop_08_s.mp3';
+import shop_07_40_s from '../../public/speechAudios/shop_07_s.mp3';
+import shop_06_41_s from '../../public/speechAudios/shop_06_s.mp3';
+import shop_05_44_s from '../../public/speechAudios/shop_05_s.mp3';
+import shop_04_48_s from '../../public/speechAudios/shop_04_s.mp3';
+import shop_03_40_s from '../../public/speechAudios/shop_03_s.mp3';
+import shop_02_00_s from '../../public/speechAudios/shop_02_s.mp3';
+import shop_01_43_s from '../../public/speechAudios/shop_01_s.mp3';
+import service_02_s from '../../public/speechAudios/service_02_s.mp3';
+import service_01_s from '../../public/speechAudios/service_01_s.mp3';
+import rest_10_46_s from '../../public/speechAudios/rest_10_s.mp3';
+import rest_09_46_s from '../../public/speechAudios/rest_09_s.mp3';
+import rest_08_46_s from '../../public/speechAudios/rest_08_s.mp3';
+import rest_07_37_s from '../../public/speechAudios/rest_07_s.mp3';
+import rest_06_41_s from '../../public/speechAudios/rest_06_s.mp3';
+import rest_05_38_s from '../../public/speechAudios/rest_05_s.mp3';
+import rest_04_43_s from '../../public/speechAudios/rest_04_s.mp3';
+import rest_03_46_s from '../../public/speechAudios/rest_03_s.mp3';
+import rest_02_43_s from '../../public/speechAudios/rest_02_s.mp3';
+import rest_01_45_s from '../../public/speechAudios/rest_01_s.mp3';
+import church_03_s from '../../public/speechAudios/church_03_s.mp3';
+import church_02_s from '../../public/speechAudios/church_02_s.mp3';
+import church_01_s from '../../public/speechAudios/church_01_s.mp3';
+import castle_s from '../../public/speechAudios/castle_s.mp3';
+
+// welcome and to go
 import go from '../../public/speechAudios/0_3go.mp3';
 import tips from '../../public/speechAudios/0_2tips.mp3';
 import welcome from '../../public/speechAudios/0_1welcome.mp3';
@@ -150,7 +185,13 @@ function App() {
     "church": ['church_01', 'church_02', 'church_03'], //4 - 4
     "castle": ['castle'], //1 - 1
     "private_house": ['sorry_01', 'sorry_02', 'sorry_03'], //9 - 3
-    "wrongspeech": ['wrongspeech_01', 'wrongspeech_02', 'wrongspeech_03', 'wrongspeech_04', 'wrongspeech_05', 'wrongspeech_06', 'wrongspeech_07'] //wrong objects, guidance
+    "wrongspeech": ['wrongspeech_01', 'wrongspeech_02', 'wrongspeech_03', 'wrongspeech_04', 'wrongspeech_05', 'wrongspeech_06', 'wrongspeech_07'], //wrong objects, guidance
+    "shop_s": ['shop_01_s', 'shop_02_s', 'shop_03_s', 'shop_04_s', 'shop_05_s', 'shop_06_s', 'shop_07_s', 'shop_08_s', 'shop_09_s', 'shop_10_s'], //67 - 10
+    "restaurant_s": ['rest_01_s', 'rest_02_s', 'rest_03_s', 'rest_04_s', 'rest_05_s', 'rest_06_s', 'rest_07_s', 'rest_08_s', 'rest_09_s', 'rest_10_s'], //86 - 10
+    "service_s": ['service_01_s', 'service_02_s'], //34 -5
+    "church_s": ['church_01_s', 'church_02_s', 'church_03_s'], //4 - 4
+    "castle_s": ['castle_s'], //1 - 1
+    "private_house_s": ['sorry_01_s', 'sorry_02_s', 'sorry_03_s'], //9 - 3
   }
 
   // Manipulate Faults
@@ -274,6 +315,7 @@ function App() {
     <>
       <div>
         {/* {projName ? <h1>{`Hello ${projName}`}</h1> : <h1>Loading.. please wait!</h1>} */}
+        <br/>
         {!isVoicePlay ? <Image
           style={{
             maxWidth: "100vw",
@@ -367,15 +409,18 @@ function App() {
                 // }}
                 onChange={handleChange}
               >
-                <OptGroup label="Normal">
+                <OptGroup label="Pure Test">
                   <Option value="0_straightline_trail">0_straightline_trail</Option>
-                  <Option value="1_normal_trail">1_normal_trail</Option>
                 </OptGroup>
-                <OptGroup label="Faults">
-                  <Option value="2_no_cursor_trail">2_no_cursor_trail</Option>
-                  <Option value="3_wrong_cursor_trail">3_wrong_cursor_trail</Option>
-                  <Option value="4_wrong_speech_trail">4_wrong_speech_trail</Option>
-                  <Option value="5_wrong_detection_trail">5_wrong_detection_trail</Option>
+                <OptGroup label="Short Speech">
+                  <Option value="4_short_speech">1_short_speech_cursor_suq</Option>
+                </OptGroup>
+                <OptGroup label="Long Speech">
+                  <Option value="1_long_speech_blue_arrow">2_long_speech_cursor_suq</Option>
+                </OptGroup>
+                <OptGroup label="Cursor Variables">
+                  <Option value="2_long_speech_cursor_suq">3_long_speech_blue_arrow</Option>
+                  <Option value="3_long_speech_no_cursor">4_long_speech_no_cursor</Option>
                 </OptGroup>
               </Select>
             </Col>
@@ -396,15 +441,15 @@ function App() {
             </Button></Col>
           </Row>
 
-          <Divider>Normal Detection</Divider>
+          <Divider>Normal Detection (Long Speech)</Divider>
           <Row>
             <Col span={7} offset={1}>
-              <Button type="primary" color="#52c41a" block onClick={() => sendSoundandomBy('shop')}>
+              <Button type="primary" style={{ background: "black", color: "white", borderColor: "white" }} block onClick={() => sendSoundandomBy('shop')}>
                 GROCERY
               </Button>
             </Col>
             <Col span={7} offset={1}>
-              <Button type="primary" color="#52c41a" block onClick={() => sendSoundandomBy('restaurant')}>
+              <Button type="primary" style={{ background: "#a34652", color: "yellow", borderColor: "#ae7333" }} block onClick={() => sendSoundandomBy('restaurant')}>
                 RESTAUR
               </Button></Col>
             <Col span={7} offset={1}>
@@ -415,14 +460,18 @@ function App() {
           </Row>
           <br/>
           <Row>
-            <Col span={10} offset={2}>
-              <Button type="default" block onClick={() => sendSoundandomBy('church')}>
+            <Col span={7} offset={1}>
+              <Button type="default" style={{ background: "#dfd0ba", color: "#white" }} block onClick={() => sendSoundandomBy('church')}>
                 CHURCH
               </Button>
             </Col>
-            <Col span={10} offset={2}>
+            <Col span={7} offset={1}>
               <Button type="default" block onClick={() => sendSoundandomBy('castle')}>
                 CASTLE
+              </Button></Col>
+              <Col span={7} offset={1}>
+              <Button type="default" block onClick={() => sendSoundandomBy('private_house')}>
+                PRIVATE
               </Button></Col>
           </Row>
 
@@ -438,6 +487,41 @@ function App() {
                 NOT SAVE
               </Button></Col>
           </Row>
+
+          <Divider>Normal Detection (Short Speech)</Divider>
+          <Row>
+            <Col span={7} offset={1}>
+              <Button type="primary" style={{ background: "black", color: "white", borderColor: "white" }} block onClick={() => sendSoundandomBy('shop_s')}>
+                GROCERY
+              </Button>
+            </Col>
+            <Col span={7} offset={1}>
+              <Button type="primary" style={{ background: "#a34652", color: "yellow", borderColor: "#ae7333" }} block onClick={() => sendSoundandomBy('restaurant_s')}>
+                RESTAUR
+              </Button></Col>
+            <Col span={7} offset={1}>
+              <Button type="primary" block onClick={() => sendSoundandomBy('service_s')}>
+                SERVICE
+              </Button>
+            </Col>
+          </Row>
+          <br/>
+          <Row>
+            <Col span={7} offset={1}>
+              <Button type="default" style={{ background: "#dfd0ba", color: "#white" }} block onClick={() => sendSoundandomBy('church_s')}>
+                CHURCH
+              </Button>
+            </Col>
+            <Col span={7} offset={1}>
+              <Button type="default" block onClick={() => sendSoundandomBy('castle_s')}>
+                CASTLE
+              </Button></Col>
+              <Col span={7} offset={1}>
+              <Button type="default" block onClick={() => sendSoundandomBy('private_house_s')}>
+                PRIVATE
+              </Button></Col>
+          </Row>
+
 
           <Divider>Speech Faults</Divider>
           <Row>
