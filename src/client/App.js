@@ -120,9 +120,10 @@ function App() {
   const [logo, setLogo] = useState("");
   const [messageReceived, setMessageReceived] = useState("");
   const [soundIdReceived, setSoundIdReceived] = useState("");
+  const [speechType, setSpeechType] = useState("short");
 
   // Experiemntal States
-  const [trailType, setTrailType] = useState("");
+  const [trialType, settrialType] = useState("SSAP");
 
   // Audio resource mapping
   const soundsMap = {
@@ -227,12 +228,12 @@ function App() {
 
   // Manipulate Faults
   const faultType = {
-    "0_straightline_trail": {},
-    "1_normal_trail": {},
-    "2_no_cursor_trail": {}, // no cursor at all
-    "3_wrong_cursor_trail": {},// 50% each, correct speech, manally one right one wrong side
-    "4_wrong_speech_trail": {},// 50% each, 50% wrong objects
-    "5_wrong_detection_trail": {} // normal, wrong side objects
+    "0_straightline_trial": {},
+    "1_normal_trial": {},
+    "2_no_cursor_trial": {}, // no cursor at all
+    "3_wrong_cursor_trial": {},// 50% each, correct speech, manally one right one wrong side
+    "4_wrong_speech_trial": {},// 50% each, 50% wrong objects
+    "5_wrong_detection_trial": {} // normal, wrong side objects
   }
 
   // if the driver point at something I can't see it, then
@@ -266,9 +267,9 @@ function App() {
 
   // Trigger sounds based on button (landmark type)
   const sendSoundandomBy = (audioType = null) => {
-    if(!audioType) return;
+    if (!audioType) return;
     let audioArray = audioTypeMap[audioType]
-    if(!audioArray || audioArray.length == 0) {
+    if (!audioArray || audioArray.length == 0) {
       console.log('no commands found');
     }
     let audioIdWillSent = audioArray[Math.floor(Math.random() * audioArray.length)];
@@ -338,15 +339,33 @@ function App() {
 
   // Fault Tyoe Control
   const handleChange = (value) => {
-    setTrailType(value);
+    settrialType(value);
     console.log(`selected ${value}`);
   };
+
+  useEffect(() => {
+    if(trialType == "SSAP" || trialType == "SSSP") {
+      setSpeechType("short");
+    } else{
+      setSpeechType("long");
+    }
+  },
+    [trialType]
+  );
+
+  // preload all audios
+  // buttonList.map((name, index) => {
+  //   let _url = soundsMap[name];
+  //   new Audio(_url);
+  //   console.log('preload successed');
+  //   setMessageReceived('Preload succeed');
+  // })
 
   return (
     <>
       <div>
         {/* {projName ? <h1>{`Hello ${projName}`}</h1> : <h1>Loading.. please wait!</h1>} */}
-        <br/><br/>
+        <br /><br />
         {!isVoicePlay ? <Image
           style={{
             maxWidth: "100vw",
@@ -428,30 +447,28 @@ function App() {
               <Input addonBefore="Participant ID" defaultValue="XXX" />
             </Col>
             <Col span={12}>
-              <InputNumber addonBefore="Trail" defaultValue={1} />
+              <InputNumber addonBefore="trial" defaultValue={1} />
             </Col>
           </Row>
           <Row>
             <Col span={24}>
               Fault Type: <Select
-                defaultValue="0_straightline_trail"
+                defaultValue="SSAP"
                 // style={{
                 //   width: 200,
                 // }}
                 onChange={handleChange}
               >
-                <OptGroup label="Pure Test">
-                  <Option value="0_straightline_trail">0_straightline_trail</Option>
-                </OptGroup>
+                {/* <OptGroup label="Pure Test">
+                  <Option value="0_straightline_trial"></Option>
+                </OptGroup> */}
                 <OptGroup label="Short Speech">
-                  <Option value="4_short_speech">1_short_speech_cursor_suq</Option>
+                  <Option value="SSAP">Short Speech Arrow Pointer (SSAP)</Option>
+                  <Option value="SSSP">Short Speech Square Pointer (SSSP)</Option>
                 </OptGroup>
                 <OptGroup label="Long Speech">
-                  <Option value="1_long_speech_blue_arrow">2_long_speech_cursor_suq</Option>
-                </OptGroup>
-                <OptGroup label="Cursor Variables">
-                  <Option value="2_long_speech_cursor_suq">3_long_speech_blue_arrow</Option>
-                  <Option value="3_long_speech_no_cursor">4_long_speech_no_cursor</Option>
+                  <Option value="LSAP">Long Speech Arrow Pointer (LSAP)</Option>
+                  <Option value="LSSP">Long Speech Square Pointer (LSSP)</Option>
                 </OptGroup>
               </Select>
             </Col>
@@ -472,39 +489,77 @@ function App() {
             </Button></Col>
           </Row>
 
-          <Divider>Normal Detection (Long Speech)</Divider>
-          <Row>
-            <Col span={7} offset={1}>
-              <Button type="primary" style={{ background: "black", color: "white", borderColor: "white" }} block onClick={() => sendSoundandomBy('shop')}>
-                GROCERY
-              </Button>
-            </Col>
-            <Col span={7} offset={1}>
-              <Button type="primary" style={{ background: "#a34652", color: "yellow", borderColor: "#ae7333" }} block onClick={() => sendSoundandomBy('restaurant')}>
-                RESTAUR
-              </Button></Col>
-            <Col span={7} offset={1}>
-              <Button type="primary" block onClick={() => sendSoundandomBy('service')}>
-                SERVICE
-              </Button>
-            </Col>
-          </Row>
-          <br/>
-          <Row>
-            <Col span={7} offset={1}>
-              <Button type="default" style={{ background: "#dfd0ba", color: "#white" }} block onClick={() => sendSoundandomBy('church')}>
-                CHURCH
-              </Button>
-            </Col>
-            <Col span={7} offset={1}>
-              <Button type="default" block onClick={() => sendSoundandomBy('castle')}>
-                CASTLE
-              </Button></Col>
+          {speechType == "long" ? <div>
+            <Divider>Normal Detection (Long Speech)</Divider>
+            <Row>
               <Col span={7} offset={1}>
-              <Button type="default" block onClick={() => sendSoundandomBy('private_house')}>
-                PRIVATE
-              </Button></Col>
-          </Row>
+                <Button type="primary" style={{ background: "black", color: "white", borderColor: "white" }} block onClick={() => sendSoundandomBy('shop')}>
+                  GROCERY
+                </Button>
+              </Col>
+              <Col span={7} offset={1}>
+                <Button type="primary" style={{ background: "#a34652", color: "yellow", borderColor: "#ae7333" }} block onClick={() => sendSoundandomBy('restaurant')}>
+                  RESTAUR
+                </Button></Col>
+              <Col span={7} offset={1}>
+                <Button type="primary" block onClick={() => sendSoundandomBy('service')}>
+                  SERVICE
+                </Button>
+              </Col>
+            </Row>
+            <br />
+            <Row>
+              <Col span={7} offset={1}>
+                <Button type="default" style={{ background: "#dfd0ba", color: "#white" }} block onClick={() => sendSoundandomBy('church')}>
+                  CHURCH
+                </Button>
+              </Col>
+              <Col span={7} offset={1}>
+                <Button type="default" block onClick={() => sendSoundandomBy('castle')}>
+                  CASTLE
+                </Button></Col>
+              <Col span={7} offset={1}>
+                <Button type="default" block onClick={() => sendSoundandomBy('private_house')}>
+                  PRIVATE
+                </Button></Col>
+            </Row>
+          </div> : null}
+
+          {speechType == "short" ? <div>
+            <Divider>Normal Detection (Short Speech)</Divider>
+            <Row>
+              <Col span={7} offset={1}>
+                <Button type="primary" style={{ background: "black", color: "white", borderColor: "white" }} block onClick={() => sendSoundandomBy('shop_s')}>
+                  GROCERY
+                </Button>
+              </Col>
+              <Col span={7} offset={1}>
+                <Button type="primary" style={{ background: "#a34652", color: "yellow", borderColor: "#ae7333" }} block onClick={() => sendSoundandomBy('restaurant_s')}>
+                  RESTAUR
+                </Button></Col>
+              <Col span={7} offset={1}>
+                <Button type="primary" block onClick={() => sendSoundandomBy('service_s')}>
+                  SERVICE
+                </Button>
+              </Col>
+            </Row>
+            <br />
+            <Row>
+              <Col span={7} offset={1}>
+                <Button type="default" style={{ background: "#dfd0ba", color: "#white" }} block onClick={() => sendSoundandomBy('church_s')}>
+                  CHURCH
+                </Button>
+              </Col>
+              <Col span={7} offset={1}>
+                <Button type="default" block onClick={() => sendSoundandomBy('castle_s')}>
+                  CASTLE
+                </Button></Col>
+              <Col span={7} offset={1}>
+                <Button type="default" block onClick={() => sendSoundandomBy('private_house_s')}>
+                  PRIVATE
+                </Button></Col>
+            </Row>
+          </div> : null}
 
           <Divider>Location Saved/not</Divider>
           <Row>
@@ -519,43 +574,10 @@ function App() {
               </Button></Col>
           </Row>
 
-          <Divider>Normal Detection (Short Speech)</Divider>
-          <Row>
-            <Col span={7} offset={1}>
-              <Button type="primary" style={{ background: "black", color: "white", borderColor: "white" }} block onClick={() => sendSoundandomBy('shop_s')}>
-                GROCERY
-              </Button>
-            </Col>
-            <Col span={7} offset={1}>
-              <Button type="primary" style={{ background: "#a34652", color: "yellow", borderColor: "#ae7333" }} block onClick={() => sendSoundandomBy('restaurant_s')}>
-                RESTAUR
-              </Button></Col>
-            <Col span={7} offset={1}>
-              <Button type="primary" block onClick={() => sendSoundandomBy('service_s')}>
-                SERVICE
-              </Button>
-            </Col>
-          </Row>
-          <br/>
-          <Row>
-            <Col span={7} offset={1}>
-              <Button type="default" style={{ background: "#dfd0ba", color: "#white" }} block onClick={() => sendSoundandomBy('church_s')}>
-                CHURCH
-              </Button>
-            </Col>
-            <Col span={7} offset={1}>
-              <Button type="default" block onClick={() => sendSoundandomBy('castle_s')}>
-                CASTLE
-              </Button></Col>
-              <Col span={7} offset={1}>
-              <Button type="default" block onClick={() => sendSoundandomBy('private_house_s')}>
-                PRIVATE
-              </Button></Col>
-          </Row>
 
 
-          <Divider>Speech Faults</Divider>
-          <Row>
+          <Divider hidden>Speech Faults</Divider>
+          <Row hidden>
             <Col span={24}>
               <Button type="primary" color="#52c41a" block onClick={() => sendSoundandomBy('wrongspeech')}>
                 Irrelevant
