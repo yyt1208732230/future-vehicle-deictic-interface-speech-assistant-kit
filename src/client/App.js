@@ -14,13 +14,13 @@ import { uuid } from 'uuidv4';
 import ReactImage from './tesla-model-3-screen-mockup-promo.jpg';
 import VoiceGIF from '../../public/speechAudios/voice.gif';
 // Prepared AI Response List
-import wrongspeech_07 from '../../public/speechAudios/wrongspeech_07.mp3';
-import wrongspeech_06 from '../../public/speechAudios/wrongspeech_06.mp3';
-import wrongspeech_05 from '../../public/speechAudios/wrongspeech_05.mp3';
-import wrongspeech_04 from '../../public/speechAudios/wrongspeech_04.mp3';
-import wrongspeech_03 from '../../public/speechAudios/wrongspeech_03.mp3';
-import wrongspeech_02 from '../../public/speechAudios/wrongspeech_02.mp3';
-import wrongspeech_01 from '../../public/speechAudios/wrongspeech_01.mp3';
+// import wrongspeech_07 from '../../public/speechAudios/wrongspeech_07.mp3';
+// import wrongspeech_06 from '../../public/speechAudios/wrongspeech_06.mp3';
+// import wrongspeech_05 from '../../public/speechAudios/wrongspeech_05.mp3';
+// import wrongspeech_04 from '../../public/speechAudios/wrongspeech_04.mp3';
+// import wrongspeech_03 from '../../public/speechAudios/wrongspeech_03.mp3';
+// import wrongspeech_02 from '../../public/speechAudios/wrongspeech_02.mp3';
+// import wrongspeech_01 from '../../public/speechAudios/wrongspeech_01.mp3';
 
 // normal long speech
 import sorry_03 from '../../public/speechAudios/sorry_03.mp3';
@@ -134,13 +134,13 @@ function App() {
     // "5_Rest1": sound_5_Rest1,
     // "6_Saved": sound_6_Saved,
     // "7_Ok": sound_7_Ok,
-    'wrongspeech_07': wrongspeech_07,
-    'wrongspeech_06': wrongspeech_06,
-    'wrongspeech_05': wrongspeech_05,
-    'wrongspeech_04': wrongspeech_04,
-    'wrongspeech_03': wrongspeech_03,
-    'wrongspeech_02': wrongspeech_02,
-    'wrongspeech_01': wrongspeech_01,
+    // 'wrongspeech_07': wrongspeech_07,
+    // 'wrongspeech_06': wrongspeech_06,
+    // 'wrongspeech_05': wrongspeech_05,
+    // 'wrongspeech_04': wrongspeech_04,
+    // 'wrongspeech_03': wrongspeech_03,
+    // 'wrongspeech_02': wrongspeech_02,
+    // 'wrongspeech_01': wrongspeech_01,
     // short response
     'shop_10_s': shop_10_47_s,
     'shop_09_s': shop_09_50_s,
@@ -217,7 +217,8 @@ function App() {
     "church": ['church_01', 'church_02', 'church_03'], //4 - 4
     "castle": ['castle'], //1 - 1
     "private_house": ['sorry_01', 'sorry_02', 'sorry_03'], //9 - 3
-    "wrongspeech": ['wrongspeech_01', 'wrongspeech_02', 'wrongspeech_03', 'wrongspeech_04', 'wrongspeech_05', 'wrongspeech_06', 'wrongspeech_07'], //wrong objects, guidance
+    // "wrongspeech": ['wrongspeech_01', 'wrongspeech_02', 'wrongspeech_03', 'wrongspeech_04', 'wrongspeech_05', 'wrongspeech_06', 'wrongspeech_07'], //wrong objects, guidance
+    "wrongspeech": [], //wrong objects, guidance
     "shop_s": ['shop_01_s', 'shop_02_s', 'shop_03_s', 'shop_04_s', 'shop_05_s', 'shop_06_s', 'shop_07_s', 'shop_08_s', 'shop_09_s', 'shop_10_s'], //67 - 10
     "restaurant_s": ['rest_01_s', 'rest_02_s', 'rest_03_s', 'rest_04_s', 'rest_05_s', 'rest_06_s', 'rest_07_s', 'rest_08_s', 'rest_09_s', 'rest_10_s'], //86 - 10
     "service_s": ['service_01_s', 'service_02_s'], //34 -5
@@ -344,9 +345,9 @@ function App() {
   };
 
   useEffect(() => {
-    if(trialType == "SSAP" || trialType == "SSSP") {
+    if (trialType == "SSAP" || trialType == "SSSP") {
       setSpeechType("short");
-    } else{
+    } else {
       setSpeechType("long");
     }
   },
@@ -354,6 +355,84 @@ function App() {
   );
 
   // preload all audios
+  let loaded = 0;
+  const loadedAudio = () => {
+    loaded++;
+    if (loaded == buttonList.length) {
+      setMessageReceived('Preload succeed');
+    }
+
+  }
+  const preloadAudios = (url) => {
+    let _audio = new Audio(url);
+    _audio.addEventListener('canplaythrough', loadedAudio, false);
+    _audio.src = url;
+  }
+
+  preloadAudios(sorry_03);
+  preloadAudios(sorry_02);
+  preloadAudios(sorry_01);
+  preloadAudios(shop_10_47);
+  preloadAudios(shop_09_50);
+  preloadAudios(shop_08_45);
+  preloadAudios(shop_07_40);
+  preloadAudios(shop_06_41);
+  preloadAudios(shop_05_44);
+  preloadAudios(shop_04_48);
+  preloadAudios(shop_03_40);
+  preloadAudios(shop_02_00);
+  preloadAudios(shop_01_43);
+  preloadAudios(service_02);
+  preloadAudios(service_01);
+  preloadAudios(save_01);
+  preloadAudios(rest_10_46);
+  preloadAudios(rest_09_46);
+  preloadAudios(rest_08_46);
+  preloadAudios(rest_07_37);
+  preloadAudios(rest_06_41);
+  preloadAudios(rest_05_38);
+  preloadAudios(rest_04_43);
+  preloadAudios(rest_03_46);
+  preloadAudios(rest_02_43);
+  preloadAudios(rest_01_45);
+  preloadAudios(notsave_01);
+  preloadAudios(church_03);
+  preloadAudios(church_02);
+  preloadAudios(church_01);
+  preloadAudios(castle);
+  preloadAudios(sorry_03_s);
+  preloadAudios(sorry_02_s);
+  preloadAudios(sorry_01_s);
+  preloadAudios(shop_10_47_s);
+  preloadAudios(shop_09_50_s);
+  preloadAudios(shop_08_45_s);
+  preloadAudios(shop_07_40_s);
+  preloadAudios(shop_06_41_s);
+  preloadAudios(shop_05_44_s);
+  preloadAudios(shop_04_48_s);
+  preloadAudios(shop_03_40_s);
+  preloadAudios(shop_02_00_s);
+  preloadAudios(shop_01_43_s);
+  preloadAudios(service_02_s);
+  preloadAudios(service_01_s);
+  preloadAudios(rest_10_46_s);
+  preloadAudios(rest_09_46_s);
+  preloadAudios(rest_08_46_s);
+  preloadAudios(rest_07_37_s);
+  preloadAudios(rest_06_41_s);
+  preloadAudios(rest_05_38_s);
+  preloadAudios(rest_04_43_s);
+  preloadAudios(rest_03_46_s);
+  preloadAudios(rest_02_43_s);
+  preloadAudios(rest_01_45_s);
+  preloadAudios(church_03_s);
+  preloadAudios(church_02_s);
+  preloadAudios(church_01_s);
+  preloadAudios(castle_s);
+  preloadAudios(go);
+  preloadAudios(tips);
+  preloadAudios(welcome);
+
   // buttonList.map((name, index) => {
   //   let _url = soundsMap[name];
   //   new Audio(_url);
