@@ -9,9 +9,6 @@ This is a website for Wizard of Oz voice control website under a simulation stud
 # Clone the repository
 git clone https://github.com/yyt1208732230/future-vehicle-deictic-interface-speech-assistant-kit.git
 
-# Go inside the directory
-cd simple-react-full-stack
-
 # Install dependencies
 yarn (or npm install)
 
