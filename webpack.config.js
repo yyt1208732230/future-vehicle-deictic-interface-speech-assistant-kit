@@ -1,6 +1,6 @@
 const path = require('path');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const outputDirectory = 'dist';
 
@@ -11,25 +11,33 @@ module.exports = {
     filename: 'bundle.js'
   },
   module: {
-    rules: [{
-      test: /\.(js|jsx)$/,
-      exclude: /node_modules/,
-      use: {
-        loader: 'babel-loader'
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader'
+        }
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.(jpg|gif|png|woff|woff2|eot|ttf|svg)$/,
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 100000
+          }
+        }
+      },
+      {
+        test: /\.mp3$/,
+        use: {
+          loader: 'file-loader'
+        }
       }
-    },
-    {
-      test: /\.css$/,
-      use: ['style-loader', 'css-loader']
-    },
-    {
-      test: /\.(jpg|gif|png|woff|woff2|eot|ttf|svg)$/,
-      loader: 'url-loader?limit=100000'
-    },
-    {
-      test: /\.mp3$/,
-      loader: 'file-loader'
-    }
     ]
   },
   resolve: {
@@ -41,8 +49,9 @@ module.exports = {
     historyApiFallback: true,
     proxy: {
       // '/api': 'http://localhost:8080'
+      '/api': 'http://192.168.137.1:8080'
       // '/api': 'http://121.37.234.166:9398'
-      '/api': 'http://121.37.234.166'
+      // '/api': 'http://121.37.234.166'
     }
   },
   plugins: [

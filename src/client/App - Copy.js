@@ -557,14 +557,14 @@ function App() {
           <Divider>Welcome & Instructions</Divider>
           <Row>
             <Col span={7} offset={1}>
-              <Button type="default" style={{ background: "#628196", color: "white" }} block onClick={() => sendSoundId('welcome')}>
+              <Button type="primary" block onClick={() => sendSoundId('welcome')}>
                 1.Welcome
               </Button>
             </Col>
-            <Col span={7} offset={1}><Button type="default" style={{ background: "#628196", color: "white" }} block onClick={() => sendSoundId('tips')}>
-              2. Instruct
+            <Col span={7} offset={1}><Button type="primary" block onClick={() => sendSoundId('tips')}>
+              2. Tips
             </Button></Col>
-            <Col span={7} offset={1}><Button type="default" style={{ background: "#628196", color: "white" }} block onClick={() => sendSoundId('go')}>
+            <Col span={7} offset={1}><Button type="primary" block onClick={() => sendSoundId('go')}>
               3.GO
             </Button></Col>
           </Row>
@@ -573,16 +573,16 @@ function App() {
             <Divider>Normal Detection (Long Speech)</Divider>
             <Row>
               <Col span={7} offset={1}>
-                <Button type="default" style={{ background: "#F1D7BD", color: "black" }} block onClick={() => sendSoundandomBy('shop')}>
+                <Button type="primary" style={{ background: "black", color: "white", borderColor: "white" }} block onClick={() => sendSoundandomBy('shop')}>
                   GROCERY
                 </Button>
               </Col>
               <Col span={7} offset={1}>
-                <Button type="default" style={{ background: "#F1D7BD", color: "black" }} block onClick={() => sendSoundandomBy('restaurant')}>
+                <Button type="primary" style={{ background: "#a34652", color: "yellow", borderColor: "#ae7333" }} block onClick={() => sendSoundandomBy('restaurant')}>
                   RESTAUR
                 </Button></Col>
               <Col span={7} offset={1}>
-                <Button type="default" style={{ background: "#F1D7BD", color: "black" }} block onClick={() => sendSoundandomBy('service')}>
+                <Button type="primary" block onClick={() => sendSoundandomBy('service')}>
                   SERVICE
                 </Button>
               </Col>
@@ -590,16 +590,16 @@ function App() {
             <br />
             <Row>
               <Col span={7} offset={1}>
-                <Button type="default" style={{ background: "#F1D7BD", color: "black" }} block onClick={() => sendSoundandomBy('church')}>
+                <Button type="default" style={{ background: "#dfd0ba", color: "#white" }} block onClick={() => sendSoundandomBy('church')}>
                   CHURCH
                 </Button>
               </Col>
               <Col span={7} offset={1}>
-                <Button type="default" style={{ background: "#F1D7BD", color: "black" }} block onClick={() => sendSoundandomBy('castle')}>
+                <Button type="default" block onClick={() => sendSoundandomBy('castle')}>
                   CASTLE
                 </Button></Col>
               <Col span={7} offset={1}>
-                <Button type="default" style={{ background: "#F1D7BD", color: "black" }} block onClick={() => sendSoundandomBy('private_house')}>
+                <Button type="default" block onClick={() => sendSoundandomBy('private_house')}>
                   PRIVATE
                 </Button></Col>
             </Row>
@@ -609,16 +609,16 @@ function App() {
             <Divider>Normal Detection (Short Speech)</Divider>
             <Row>
               <Col span={7} offset={1}>
-                <Button type="default" style={{ background: "#F1D7BD", color: "black" }} block onClick={() => sendSoundandomBy('shop_s')}>
+                <Button type="primary" style={{ background: "black", color: "white", borderColor: "white" }} block onClick={() => sendSoundandomBy('shop_s')}>
                   GROCERY
                 </Button>
               </Col>
               <Col span={7} offset={1}>
-                <Button type="default" style={{ background: "#F1D7BD", color: "black" }} block onClick={() => sendSoundandomBy('restaurant_s')}>
+                <Button type="primary" style={{ background: "#a34652", color: "yellow", borderColor: "#ae7333" }} block onClick={() => sendSoundandomBy('restaurant_s')}>
                   RESTAUR
                 </Button></Col>
               <Col span={7} offset={1}>
-                <Button type="default" style={{ background: "#F1D7BD", color: "black" }} block onClick={() => sendSoundandomBy('service_s')}>
+                <Button type="primary" block onClick={() => sendSoundandomBy('service_s')}>
                   SERVICE
                 </Button>
               </Col>
@@ -626,16 +626,16 @@ function App() {
             <br />
             <Row>
               <Col span={7} offset={1}>
-                <Button type="default" style={{ background: "#F1D7BD", color: "black" }} block onClick={() => sendSoundandomBy('church_s')}>
+                <Button type="default" style={{ background: "#dfd0ba", color: "#white" }} block onClick={() => sendSoundandomBy('church_s')}>
                   CHURCH
                 </Button>
               </Col>
               <Col span={7} offset={1}>
-                <Button type="default" style={{ background: "#F1D7BD", color: "black" }} block onClick={() => sendSoundandomBy('castle_s')}>
+                <Button type="default" block onClick={() => sendSoundandomBy('castle_s')}>
                   CASTLE
                 </Button></Col>
               <Col span={7} offset={1}>
-                <Button type="default" style={{ background: "#F1D7BD", color: "black" }} block onClick={() => sendSoundandomBy('private_house_s')}>
+                <Button type="default" block onClick={() => sendSoundandomBy('private_house_s')}>
                   PRIVATE
                 </Button></Col>
             </Row>
@@ -645,7 +645,7 @@ function App() {
           <Row>
             <Col span={10} offset={2}>
               <Button type="primary" danger block onClick={() => sendSoundId('save_01')}>
-                SAVE
+                -SAVE-
               </Button>
             </Col>
             <Col span={10} offset={2}>
